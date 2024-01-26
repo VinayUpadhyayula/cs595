@@ -1,5 +1,66 @@
 Enrolled in a small course on udemy-
 NLP - Natural Language Processing with Python by Jose Portilla
 
-Will be adding important noted here....
+Will be adding important notes here....
 
+NLP aims at understanding human language in human readable language format itself and then convert it onto machine understandable form and performs
+various actions based on the algortihm chosen and requitement.
+
+Spacy and NLTK are two main libraries used for NLP.
+
+Spacy: NLP library for implementing algorithms. It is faster and efficient but user doesnot have a choive to choose different algorithms that he need.
+
+NLTK: Natural Language Tool Kit is an open source NLP library that has many functionalities and choice for the user to choose his best fit of algorithms but is less efficient comparitive to Spacy.
+
+In the context of sentiment analysis, spacy doesn't include models which is typically easier to perform using NLTK.
+
+I am trying to first understand spacy and then explore NLTK:
+
+Text data is highly unstructured and can be in multiple languages.
+
+nlp() function from spacey automatically takes raw text and performs a series of operations to tag, parse and describe the text data.
+
+Spacy installation for macOS:
+ `conda install -c conda-forge spacy`
+  `python -m spacy download en`
+
+# Import spaCy and load the language library
+import spacy
+nlp = spacy.load('en_core_web_sm')
+
+# Create a Doc object
+doc = nlp(u'Tesla is looking at buying U.S. startup for $6 million')
+
+# Print each token separately
+for token in doc:
+    print(token.text, token.pos_, token.dep_)
+
+Output:
+Tesla PROPN nsubj
+is VERB aux
+looking VERB ROOT
+at ADP prep
+buying VERB pcomp
+U.S. PROPN compound
+startup NOUN dobj
+for ADP prep
+$ SYM quantmod
+6 NUM compound
+million NUM pobj
+
+This looks not so user-friendly, but right away we see some interesting things happened:
+1. Tesla is recognized to be a Proper Noun, not just a word at the start of a sentence
+2. U.S. is kept together as one entity (we call this a 'token')
+
+token.text-> retrieves text from the tokens generated
+token.pos->parts of speech recognition i.e, if its a noun, VERB, num etc
+token.dep->syntactic dependency(should learn what it is in the course...)
+
+___
+# Pipeline
+When we run `nlp`, our text enters a *processing pipeline* that first breaks down the text and then performs a series of operations to tag, parse and describe the data.
+
+nlp.pipeline
+[('tagger', <spacy.pipeline.Tagger at 0x237cb1e8f98>),
+ ('parser', <spacy.pipeline.DependencyParser at 0x237cb2852b0>),
+ ('ner', <spacy.pipeline.EntityRecognizer at 0x237cb285360>)]
