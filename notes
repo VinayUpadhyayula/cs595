@@ -64,3 +64,73 @@ nlp.pipeline
 [('tagger', <spacy.pipeline.Tagger at 0x237cb1e8f98>),
  ('parser', <spacy.pipeline.DependencyParser at 0x237cb2852b0>),
  ('ner', <spacy.pipeline.EntityRecognizer at 0x237cb285360>)]
+
+ #Tokenization
+
+ Tokens are the basic building blocks of the document object. Spacy is very smart enough when it divides tokens. Tokens are divided into 
+1)Prefix: which start with $,(," etc
+2)Suffix: which end with km, ), ., !," etc
+3)Infix: -, --, ..., / etc
+4)Exception: let's U.S.
+
+But punctuation is present as part of email address or website is kept as a same token.
+doc2 = nlp(u"We're here to help! Send snail-mail, email support@oursite.com or visit us at http://www.oursite.com!")
+
+for t in doc2:
+    print(t)
+
+We
+'re
+here
+to
+help
+!
+Send
+snail
+-
+mail
+,
+email
+support@oursite.com
+or
+visit
+us
+at
+http://www.oursite.com
+!
+
+The en_core_web_sm library has almost 57852 tokens.
+
+It is worthy to note that re-assignment of document tokens is not possib;e.
+doc[0] = "title" gives an error.
+TypeError: 'spacy.tokens.doc.Doc' object does not support item assignment.
+
+# Named Entities
+Going a step beyond tokens, *named entities* add another layer of context. The language model recognizes that certain words are organizational names while others are locations, and still other combinations relate to money, dates, etc. Named entities are accessible through the `ents` property of a `Doc` object.
+
+doc8 = nlp(u'Apple to build a Hong Kong factory for $6 million')
+
+for token in doc8:
+    print(token.text, end=' | ')
+
+print('\n----')
+
+for ent in doc8.ents:
+    print(ent.text+' - '+ent.label_+' - '+str(spacy.explain(ent.label_)))
+
+Apple | to | build | a | Hong | Kong | factory | for | $ | 6 | million | 
+----
+Apple - ORG - Companies, agencies, institutions, etc.
+Hong Kong - GPE - Countries, cities, states
+$6 million - MONEY - Monetary values, including unit
+
+Named Entity Recognition (NER) is an important machine learning tool applied to Natural Language Processing.
+
+---
+# Noun Chunks
+Similar to `Doc.ents`, `Doc.noun_chunks` are another object property. *Noun chunks* are "base noun phrases" – flat phrases that have a noun as their head. You can think of noun chunks as a noun plus the words describing the noun.
+
+spaCy includes a built-in visualization tool called **displaCy**. displaCy is able to detect whether you're working in a Jupyter notebook, and will return markup that can be rendered in a cell right away.
+
+doc = nlp(u'Over the last quarter Apple sold nearly 20 thousand iPods for a profit of $6 million.')
+displacy.render(doc, style='ent', jupyter=True)
