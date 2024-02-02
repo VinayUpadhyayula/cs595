@@ -134,3 +134,44 @@ spaCy includes a built-in visualization tool called **displaCy**. displaCy is ab
 
 doc = nlp(u'Over the last quarter Apple sold nearly 20 thousand iPods for a profit of $6 million.')
 displacy.render(doc, style='ent', jupyter=True)
+
+------
+# Lemmatization
+
+In contrast to stemming, lemmatization looks beyond word reduction, and considers a language's full vocabulary to apply a *morphological analysis* to words. The lemma of 'was' is 'be' and the lemma of 'mice' is 'mouse'. Further, the lemma of 'meeting' might be 'meet' or 'meeting' depending on its use in a sentence.
+
+doc3 = nlp(u"I am meeting him tomorrow at the meeting.")
+show_lemmas(doc3)
+
+I            PRON   561228191312463089     -PRON-
+am           VERB   10382539506755952630   be
+meeting      VERB   6880656908171229526    meet
+him          PRON   561228191312463089     -PRON-
+tomorrow     NOUN   3573583789758258062    tomorrow
+at           ADP    11667289587015813222   at
+the          DET    7425985699627899538    the
+meeting      NOUN   14798207169164081740   meeting
+.            PUNCT  12646065887601541794   .
+
+It is to note that Note that lemmatization does not reduce words to their most basic synonym - that is, enormous doesn't become big and automobile doesn't become car.
+
+---
+# Stop Words
+Words like "a" and "the" appear so frequently that they don't require tagging as thoroughly as nouns, verbs and modifiers. We call these stop words, and they can be filtered from the text to be processed. spaCy holds a built-in list of some 305 English stop words.
+
+## To add a stop word
+There may be times when you wish to add a stop word to the default set. Perhaps you decide that `'btw'` (common shorthand for "by the way") should be considered a stop word.
+
+# Add the word to the set of stop words. Use lowercase!
+nlp.Defaults.stop_words.add('btw')
+
+# Set the stop_word tag on the lexeme
+nlp.vocab['btw'].is_stop = True
+
+Alternatively to remove:
+
+# Remove the word from the set of stop words
+nlp.Defaults.stop_words.remove('beyond')
+
+# Remove the stop_word tag from the lexeme
+nlp.vocab['beyond'].is_stop = False
