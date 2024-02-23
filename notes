@@ -237,3 +237,30 @@ from spacy.matcher import PhraseMatcher
 matcher = PhraseMatcher(nlp.vocab)
 
 USing this matcher we can load a document from any directory and perform matching based on the pattern in the entire document, play with the slicing the matches etc.(like matching words around the pattern, match the entire line with the pattern)
+
+# Parts of Speech Tagging
+
+Processing raw text intelligently is difficult: most words are rare, and it's common for words that look completely different to mean almost the same thing. The same words in a different order can mean something completely different. Even splitting text into useful word-like units can be difficult in many languages. 
+
+Defining nlp and doc from nlp() as above, 
+print(doc[4].text, doc[4].pos_, doc[4].tag_, spacy.explain(doc[4].tag_))
+jumped VERB VBD verb, past tense
+
+* To view the coarse POS tag use `token.pos_`
+* To view the fine-grained tag use `token.tag_`
+* To view the description of either type of tag we can use `spacy.explain(tag)`
+
+# Frequency of POS items
+
+`POS_counts` returns a dictionary, from which we can obtain a list of keys with `POS_counts.items()`.By sorting the list we have access to the tag and its count, in order.
+
+for k,v in sorted(POS_counts.items()):
+    print(f'{k}. {doc.vocab[k].text:{5}}: {v}')
+
+83. ADJ  : 3
+84. ADP  : 1
+89. DET  : 2
+91. NOUN : 3
+93. PART : 1
+96. PUNCT: 1
+99. VERB : 1
