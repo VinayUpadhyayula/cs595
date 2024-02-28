@@ -264,3 +264,49 @@ for k,v in sorted(POS_counts.items()):
 93. PART : 1
 96. PUNCT: 1
 99. VERB : 1
+
+# Named Entity Recognition (NER)
+spaCy has an **'ner'** pipeline component that identifies token spans fitting a predetermined set of named entities. These are available as the `ents` property of a `Doc` object.
+
+import spacy
+nlp = spacy.load('en_core_web_sm')
+
+def show_ents(doc):
+    if doc.ents:
+        for ent in doc.ents:
+            print(ent.text+' - '+ent.label_+' - '+str(spacy.explain(ent.label_)))
+    else:
+        print('No named entities found.')
+doc = nlp(u'May I go to Washington, DC next May to see the Washington Monument?')
+
+show_ents(doc)
+
+Output:
+
+Washington, DC - GPE - Countries, cities, states
+next May - DATE - Absolute or relative dates or periods
+the Washington Monument - ORG - Companies, agencies, institutions, etc.
+
+doc = nlp(u'Can I please borrow 500 dollars from you to buy some Microsoft stock?')
+
+for ent in doc.ents:
+    print(ent.text, ent.start, ent.end, ent.start_char, ent.end_char, ent.label_)
+
+Output:
+
+500 dollars 4 6 20 31 MONEY
+Microsoft 11 12 53 62 ORG
+
+## Adding a Named Entity to a Span
+Normally we would have spaCy build a library of named entities by training it on several samples of text.
+
+from spacy.tokens import Span
+
+# Get the hash value of the ORG entity label
+ORG = doc.vocab.strings[u'ORG']  
+
+# Create a Span for the new entity
+new_ent = Span(doc, 0, 1, label=ORG)
+
+# Add the entity to the existing Doc object
+doc.ents = list(doc.ents) + [new_ent]
