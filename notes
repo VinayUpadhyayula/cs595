@@ -370,3 +370,35 @@ leadership is doing the right things."
 -Peter Drucker
 
 This only applies to the current doc object but not to the entire library , we can achieve that by changing the spacy rule itself by manipulating the token start and end.
+
+# Text Classification
+     In machine learning supervised learning is a type of paradigm that works on labelled data and predict based on historial ouput.
+
+On a higher note, the stages involved in a machine learning process are :
+
+1)Data Acquistion - from various online resources or real- time data.
+2)Data Cleaning - a pre processing step like vectorization.
+3)Train /Test SPlit of input data - mostly 70:30 split
+4)Model training - train the model using trained data and fit/predict using the trained model on the 30% data
+5)Model Deployment
+
+Each machine learning model predicts almost same output in case of say classification(detecting whether a mail is a HAM or a Spam). So we need various performance metrics to evaluate the accuracy/correctness of the model.
+
+Vectorization : It a process of converting human readable raw text into a vector(matrix) so that it is understandable by the model.
+
+In real world scenario it is not enough to have a single metric as it may not encompass all the scenaroios needed to evaluate the model. So we have many metrics such as:
+
+1) Accuracy = no of correct predictions/ total no of predictions
+-- It is useful when we have balanced featured data (ie., 50% HAM, 50% SPAM data in the fetaure set)
+--Not very useful when we have un - balanced data (ie, 99%SPAM, 1% HAM data in the feature set)
+
+2)Precision = no of True Positive / no of True Positive + no of False positive
+ - It is the ability to identify only relevant data points i.e., proportion of what actually is relevant
+
+3)Recall =  no of True Positive / no of True Positive + no of False negative
+- It is the ability to find all the relevant cases within a dataset
+
+4)F1 Score = 2* (precision*recall/precision +recall)
+- It is the harmonic mean of recall and precision.
+
+Confusion matrix: It gives the ratio of TP, TN, FP and FN's.
