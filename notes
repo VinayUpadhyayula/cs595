@@ -402,3 +402,6 @@ In real world scenario it is not enough to have a single metric as it may not en
 - It is the harmonic mean of recall and precision.
 
 Confusion matrix: It gives the ratio of TP, TN, FP and FN's.
+
+# Scikit Learn 
+Scikit learn library is used for all the functions like numpy, pandas, matplotlib and many others for data preprocessing, visualizing data and machine learning model training, prediction and performance metrics.
