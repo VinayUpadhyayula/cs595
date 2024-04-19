@@ -405,3 +405,40 @@ Confusion matrix: It gives the ratio of TP, TN, FP and FN's.
 
 # Scikit Learn 
 Scikit learn library is used for all the functions like numpy, pandas, matplotlib and many others for data preprocessing, visualizing data and machine learning model training, prediction and performance metrics.
+
+# Term Frequencey - Inverse Document Frequencey (TF-IDF) Vectorization
+
+Most machine learning models understand numeric data where most of the real world data cannot be and is not and so is out twitter sentiment analysis data. After cleaning the data as part of further pre processing we assign and vectorize the text data into numeric vector using TF - IDF vectorization. Before diving deep into TF - IDF let us undestand first what IDF and TF mean:
+
+IDF(t)  = log(Total no of documents/No of documents t is present in)
+
+TF(t,d) = total number of time term t is present in doc A/ Total no of terms in doc A
+
+Why do we go for TF also but not simpy use IDF?
+
+    One document might contain 1000 words whereas the other might contain only 10 words then it would be unfair and wrong to check for IDF so we take Term frequency which matters to that document
+
+TF - IDF = TF(t) * IDF(t,d)
+
+btw, why use log?? I got a neat and simple answer on Stack Overflow 
+https://stackoverflow.com/questions/27067992/why-is-log-used-when-calculating-term-frequency-weight-and-idf-inverse-document
+
+Debasis's answer: 
+
+Here is the intuition: If term frequency for the word 'computer' in doc1 is 10 and in doc2 it's 20, we can say that doc2 is more relevant than doc1 for the word 'computer.
+
+However, if the term frequency of the same word, 'computer', for doc1 is 1 million and doc2 is 2 millions, at this point, there is no much difference in terms of relevancy anymore because they both contain a very high count for term 'computer'.
+
+Just like Debasis's answer, adding log is to dampen the importance of term that has a high frequency, e.g. Using log base 2, the count of 1 million will be reduced to 19.9!
+
+# We do TF-IDF to achieve:
+
+Numerical Representation: Machine learning algorithms typically require numerical input. TF-IDF vectorization converts text data into numerical vectors, allowing machine learning models to process and analyze textual data.
+
+Feature Extraction: TF-IDF vectorization extracts features from text data based on the frequency of words in documents. It assigns higher weights to words that are frequent in a document but rare in other documents, capturing the importance of words in distinguishing documents.
+
+Dimensionality Reduction: TF-IDF vectorization reduces the dimensionality of the text data by representing each document with a sparse vector in a high-dimensional space. This reduces the computational complexity of processing and analyzing text data.
+
+Normalization: TF-IDF normalizes the weights of words based on their frequency and rarity in documents. This helps mitigate the impact of document length and word frequency variations across documents, making the representation more robust.
+
+This basically brings down to one ideology: words that occur more frequently has less relevancy and will be assigned a lower score than unique words which are assigned a higher score.
