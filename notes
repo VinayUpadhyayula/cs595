@@ -442,3 +442,28 @@ Dimensionality Reduction: TF-IDF vectorization reduces the dimensionality of the
 Normalization: TF-IDF normalizes the weights of words based on their frequency and rarity in documents. This helps mitigate the impact of document length and word frequency variations across documents, making the representation more robust.
 
 This basically brings down to one ideology: words that occur more frequently has less relevancy and will be assigned a lower score than unique words which are assigned a higher score.
+
+# Breaking down on Logistic Regression
+    Logistic Regression is one of the powerful classifier in machine learning. It comes to the class of disctiminiative classifier and uses a logistic/sigmoid function as its hypothesis space that maps our features to labels. In our code let us break done each parameter passed to the LogisticRegression function in the sklearn library,
+`LogisticRegression(C=2, max_iter=1000, n_jobs=-1)`:
+
+1. **C**: 
+   - `C` is the inverse of regularization strength. 
+   - It's a positive floating-point value, smaller values specify stronger regularization.
+   - Regularization is a technique used to prevent overfitting by penalizing large coefficients.
+   - Larger values of `C` reduce the regularization strength, allowing the model to fit the training data more closely.
+   - In our case, `C=2` means that the regularization strength is relatively low, allowing the model to fit the data closely.
+   
+2. **max_iter**: 
+   - `max_iter` is the maximum number of iterations taken for the optimization algorithm to converge.
+   - Optimization algorithms like gradient descent are used to find the optimal coefficients for logistic regression.
+   - If the algorithm doesn't converge within `max_iter` iterations, it stops and returns the current result.
+   - Setting `max_iter` to a higher value allows the algorithm to search for the optimal solution for a longer time.
+   - In our case, `max_iter=1000` specifies that the optimization algorithm can take up to 1000 iterations.
+
+3. **n_jobs**:
+   - `n_jobs` specifies the number of CPU cores to use during training.
+   - If `n_jobs` is set to `-1`, it means that all available CPU cores will be used.
+   - Using multiple CPU cores can speed up the training process, especially for large datasets.
+   
+These parameters are used to control the behavior and performance of the logistic regression model during training. Adjusting these parameters can help improve the model's performance and efficiency.
