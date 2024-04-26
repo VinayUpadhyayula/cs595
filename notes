@@ -467,3 +467,15 @@ This basically brings down to one ideology: words that occur more frequently has
    - Using multiple CPU cores can speed up the training process, especially for large datasets.
    
 These parameters are used to control the behavior and performance of the logistic regression model during training. Adjusting these parameters can help improve the model's performance and efficiency.
+
+# Support Vector Machine(SVM)
+    It is one of the powerful machine learning algorithm used for regression and classification problems. SVM comprises of a hyperplane that divides the classes(say in our case). So the key idea behind is to find a hyperplane that best separates different classes in the feature space. But the true goal is to find the plane that not only separates the classes but also maximizes the margin, providing the best generalization of unseen data. It can be used for both linear and non linear classification. It focuses more on correctly classifying the most critical instances(support vectors)
+
+# SVM Edge over Logistic Regression:
+1)effective in high dimensional spaces
+2)memory efficient
+3)global optimization : SVMs solve a convex optimization problem to find the optimal decision boundary, ensuring that it converges to the global minimum
+4)It performs better with smaller datasets without the risk of overfitting
+
+# Logistic Regression Edge over SVM
+Logistic Regression is advantageous when interpretability, computational efficiency, and simplicity are priorities. It's particularly suitable for situations where the relationships between features and the target are approximately linear or when the dataset is large and sparse. 
