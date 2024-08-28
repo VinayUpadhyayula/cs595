@@ -479,3 +479,7 @@ These parameters are used to control the behavior and performance of the logisti
 
 # Logistic Regression Edge over SVM
 Logistic Regression is advantageous when interpretability, computational efficiency, and simplicity are priorities. It's particularly suitable for situations where the relationships between features and the target are approximately linear or when the dataset is large and sparse. 
+
+# Fall 2024:
+
+Going through htmx documents https://htmx.org/docs/ to understand server side rendering and injecting html contents into DOM and why is it helpful thereby reducing burden on the browser.
