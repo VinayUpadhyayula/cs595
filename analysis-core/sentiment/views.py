@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
 from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 import string
 import re
 import nltk
@@ -18,6 +19,7 @@ else:
 
 # nltk.download()
 nltk.download('stopwords')
+nltk.download('punkt') 
 STOPWORDS = set(stopwords.words('english'))
 PUNCTUATION = string.punctuation
 
@@ -49,6 +51,10 @@ def preprocess_text(text):
     text = remove_emojis(text)
     return text
 
+def tokenize_tweet(cleanedTweet):
+    tokens = word_tokenize(cleanedTweet)
+    return tokens
+
 class SentimentAPIView(APIView):
     parser_classes = [JSONParser]
 
@@ -58,6 +64,10 @@ class SentimentAPIView(APIView):
         
         # Preprocess the text
         cleaned_text = preprocess_text(input_text)
+
+        tokens = word_tokenize(cleaned_text)
+
+        #TODO: shape the clean text by transforming to be able to input it to the model 
         # Predict sentiment
         # prediction = sentiment_model.predict([cleaned_text])
         
@@ -66,4 +76,4 @@ class SentimentAPIView(APIView):
         
         # # Return response
         # return JsonResponse({'sentiment': sentiment}, status=200)
-        return JsonResponse({'output':cleaned_text},status =200)
+        return JsonResponse({'output':tokens},status =200)
