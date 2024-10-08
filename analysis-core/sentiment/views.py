@@ -1,13 +1,14 @@
 from django.shortcuts import render
 import pickle
 from django.http import JsonResponse
+import nltk
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import string
 import re
-import nltk
+from nltk.stem import PorterStemmer
 import ssl
 
 try:
@@ -17,9 +18,12 @@ except AttributeError:
 else:
     ssl._create_default_https_context = _create_unverified_https_context
 
-# nltk.download()
-nltk.download('stopwords')
-nltk.download('punkt') 
+nltk.download()
+# nltk.download('stopwords')
+# nltk.download('punkt')
+# nltk.download('wordnet')
+# nltk.download('omw-1.4')
+st = PorterStemmer()
 STOPWORDS = set(stopwords.words('english'))
 PUNCTUATION = string.punctuation
 
@@ -51,6 +55,10 @@ def preprocess_text(text):
     text = remove_emojis(text)
     return text
 
+def stemming_on_text(data):
+    stemmed_text = [st.stem(word) for word in data]
+    return stemmed_text
+
 def tokenize_tweet(cleanedTweet):
     tokens = word_tokenize(cleanedTweet)
     return tokens
@@ -67,6 +75,8 @@ class SentimentAPIView(APIView):
 
         tokens = word_tokenize(cleaned_text)
 
+        stemmed_text = stemming_on_text(tokens)
+
         #TODO: shape the clean text by transforming to be able to input it to the model 
         # Predict sentiment
         # prediction = sentiment_model.predict([cleaned_text])
@@ -76,4 +86,4 @@ class SentimentAPIView(APIView):
         
         # # Return response
         # return JsonResponse({'sentiment': sentiment}, status=200)
-        return JsonResponse({'output':tokens},status =200)
+        return JsonResponse({'output':stemmed_text},status =200)
