@@ -31,6 +31,11 @@ PUNCTUATION = string.punctuation
 with open('../sentiment_model.pkl', 'rb') as model_file:
     sentiment_model = pickle.load(model_file)
 
+with open('../vectorizer.pkl', 'rb') as model_file:
+    vectorizer = pickle.load(model_file)
+
+# vectoriser = TfidfVectorizer(ngram_range=(1,2), max_features=500000)
+
 def remove_emojis(text):
     emoji_pattern = re.compile(
         "["
@@ -84,9 +89,18 @@ class SentimentAPIView(APIView):
 
         lemmatized_text = lemmatizer_on_text(stemmed_text)
 
-        #TODO: shape the clean text by transforming to be able to input it to the model 
-        # Predict sentiment
-        # prediction = sentiment_model.predict([cleaned_text])
+        # vectoriser.fit(lemmatized_text)
+        
+        transformed_text = vectorizer.transform(lemmatized_text)
+        #Faced a lot of issues to match the features, googled and understaood how to use the same vectorizer so used the same one loaded as pickel file
+        #Below 3 indicates that that the same vectorizer has been used for transforming data before(during model training)
+        #Also to undesrand that transformed single tweet text and the model also accepts same number of features.
+        print(len(vectorizer.get_feature_names_out()))
+        print(transformed_text.shape)
+        print(sentiment_model.coef_.shape[1])
+
+        #shape the clean text by transforming to be able to input it to the model - Done
+        # TODO: Predict sentiment and classify based on prediction output
         
         # # Convert prediction output (assuming model returns 0 for negative, 1 for positive)
         # sentiment = 'Positive' if prediction[0] == 1 else 'Negative'
