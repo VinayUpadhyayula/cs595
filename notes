@@ -483,3 +483,13 @@ Logistic Regression is advantageous when interpretability, computational efficie
 # Fall 2024:
 
 Going through htmx documents https://htmx.org/docs/ to understand server side rendering and injecting html contents into DOM and why is it helpful thereby reducing burden on the browser.
+
+The pre-trained machine learning model is used to predict sentiment from a single tweet.
+
+1. **Transforming Input Data:** The cleaned text goes through stemming and finally lemmatized text (processed input) is transformed using the same TF-IDF vectorizer that was saved during model training. This ensures the same feature set is used as in the original model training.
+
+2. **Validation of Feature Consistency:** To confirm that the correct vectorizer and feature set are being used, the code prints the number of features (`235176` in our case), the shape of the transformed input text, and the model's expected input shape. These checks verify that the input text is properly transformed and matches the model's expectations.
+
+3. **Predicting Sentiment:** After transforming the input, the model makes a prediction, classifying the sentiment of the tweet based on the trained logistic regression model.
+
+This approach ensures consistency in data preprocessing, transformation, and prediction using the same vectorizer and trained model.

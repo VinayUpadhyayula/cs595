@@ -100,11 +100,10 @@ class SentimentAPIView(APIView):
         print(sentiment_model.coef_.shape[1])
 
         #shape the clean text by transforming to be able to input it to the model - Done
-        # TODO: Predict sentiment and classify based on prediction output
-        
-        # # Convert prediction output (assuming model returns 0 for negative, 1 for positive)
-        # sentiment = 'Positive' if prediction[0] == 1 else 'Negative'
+        #Predict sentiment and classify based on prediction output - Done
+        prediction = sentiment_model.predict(transformed_text)
+        print(prediction)
         
         # # Return response
         # return JsonResponse({'sentiment': sentiment}, status=200)
-        return JsonResponse({'output':lemmatized_text},status =200)
+        return JsonResponse({'prediction':prediction[0]},status =200)
