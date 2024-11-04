@@ -10,19 +10,23 @@ export default function Home() {
   {
     if(text != '')
     {
-    const res = await fetch("http://127.0.0.1:8000/predict-sentiment",{
+      const data = {
+        text : text
+       }
+    const res = await fetch("http://127.0.0.1:8000/predict-sentiment/",{
       method: "POST",
       headers:{
         "Content-Type" : "application/json",
       },
-      body : JSON.stringify(text),
+      body : JSON.stringify(data),
     }
     );
     if(!res.ok)
     {
       throw new Error("Error predicting  Sentiment of the tweet");
     }
-    return res.json();
+    console.log(res.json());
+    // return res.json();
   }
   }
   const handleTweetChange = (event:any) =>{
