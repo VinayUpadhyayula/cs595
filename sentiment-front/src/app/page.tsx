@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [text, setTweetText] = useState('');
+  const [prediction, setPrediction] = useState('');
   async function sendTweetData()
   {
     if(text != '')
@@ -13,21 +14,25 @@ export default function Home() {
       const data = {
         text : text
        }
-    const res = await fetch("http://127.0.0.1:8000/predict-sentiment/",{
+    await fetch("http://127.0.0.1:8000/predict-sentiment/",{
       method: "POST",
       headers:{
         "Content-Type" : "application/json",
       },
       body : JSON.stringify(data),
     }
-    );
-    if(!res.ok)
+    ).then((response) => response.json())
+    .then((result)=>
+    {
+      console.log(result);
+      setPrediction(result.prediction)
+    })
+    .catch((error)=>
     {
       throw new Error("Error predicting  Sentiment of the tweet");
-    }
-    console.log(res.json());
-    // return res.json();
+    });
   }
+    // return res.json();
   }
   const handleTweetChange = (event:any) =>{
     setTweetText(event.target.value);
@@ -52,6 +57,7 @@ export default function Home() {
       >
         Predict
       </button>
+      <span>{prediction}</span>
     </div>
   </div>
 </div>
