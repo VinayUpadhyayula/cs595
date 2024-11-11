@@ -1,20 +1,38 @@
 "use client";
 import { ok } from "assert";
 import Image from "next/image";
-import { useState } from "react";
-
-
+import { useEffect, useState } from "react";
+import config from "../../../config.json"
+enum SentimentEnum {
+  Negative = 0,
+  Neutral = 1,
+  Positive = 2
+}
 export default function Home() {
   const [text, setTweetText] = useState('');
   const [prediction, setPrediction] = useState('');
+  const [showPrediction, setShowPrediction] = useState(false);
+  const [enableButton, setButtonStatus] = useState(true);
+  useEffect(()=>{
+    if(text == '')
+    {
+      setShowPrediction(false);
+      setButtonStatus(true);
+    }
+    else
+    {
+      setButtonStatus(false);
+    }
+  },[text]);
   async function sendTweetData()
   {
+    setPrediction('');
     if(text != '')
     {
       const data = {
         text : text
        }
-    await fetch("http://127.0.0.1:8000/predict-sentiment/",{
+    await fetch(config.apiUrl,{
       method: "POST",
       headers:{
         "Content-Type" : "application/json",
@@ -24,15 +42,15 @@ export default function Home() {
     ).then((response) => response.json())
     .then((result)=>
     {
-      console.log(result);
-      setPrediction(result.prediction)
+      // console.log(result);
+      setShowPrediction(true);
+      setPrediction(SentimentEnum[result.prediction])
     })
     .catch((error)=>
     {
       throw new Error("Error predicting  Sentiment of the tweet");
     });
   }
-    // return res.json();
   }
   const handleTweetChange = (event:any) =>{
     setTweetText(event.target.value);
@@ -52,12 +70,20 @@ export default function Home() {
           onChange={handleTweetChange}
         ></textarea>
       <button 
-        className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className={`px-4 py-2 font-semibold rounded-md focus:outline-none focus:ring-2 
+        ${!enableButton ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
         onClick={sendTweetData}
+        disabled={enableButton}
       >
         Predict
       </button>
-      <span>{prediction}</span>
+          {showPrediction ? <span className={`px-3 py-1 font-semibold text-white rounded ${
+        prediction === "Positive"
+          ? "bg-green-500"
+          : prediction === "Negative"
+          ? "bg-red-500"
+          : "bg-yellow-500"
+      }`}>Predicted sentiment Class: {prediction}</span> : <></>}
     </div>
   </div>
 </div>
