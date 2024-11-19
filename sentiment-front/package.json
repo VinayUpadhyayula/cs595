@@ -9,10 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mui/material": "^6.1.7",
+    "firebase": "^11.0.2",
     "next": "15.0.1",
     "node": "^23.1.0",
     "react": "19.0.0-rc-69d4b800-20241021",
-    "react-dom": "19.0.0-rc-69d4b800-20241021"
+    "react-dom": "19.0.0-rc-69d4b800-20241021",
+    "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
     "@types/node": "^20",

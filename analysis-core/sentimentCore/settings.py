@@ -56,10 +56,13 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost",
     "http://127.0.0.1:3000",
 ]
-
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",  # Allow any port on localhost
+    r"^http://127.0.0.1:\d+$",  # Allow any port on 127.0.0.1
+]
 ROOT_URLCONF = 'sentimentCore.urls'
 
 TEMPLATES = [
